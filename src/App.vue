@@ -1,36 +1,71 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
-
+    <v-container pa-0 fluid>
+      <v-layout class='header' text-center align-center row fill-height>
+        <v-flex xs-12 >
+          <h1>The Ultimate <div class='rotate'>TRIVIA</div> Game</h1>
+        </v-flex>
+      </v-layout>
+    </v-container>
     <v-content>
-      <HelloWorld/>
+      <Selection v-if='showSelection' />
+      <Quiz v-if='showQuiz'/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Quiz from './components/Quiz';
+import Selection from './components/Selection';
+import { mapState, mapActions } from 'vuex';
+import { log } from 'util';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Quiz,
+    Selection
   },
   data: () => ({
-    //
-  }),
-};
+    
+    }),
+  computed: {
+    ...mapState([
+      'showSelection',
+      'showQuiz'
+    ])
+  }
+}
+
 </script>
+
+<style lang="scss" >
+  body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .header {
+    height: 200px;
+    background-color: #272626;
+    color: #fff;
+    & h1 {
+      font-size: 2.5rem;
+      
+    }
+    
+  }
+  .rotate {
+    display: inline-block;
+    transform: rotate(-15deg);
+    margin: 10px;
+    color: #fa0000;
+    font-family: army;
+    font-size: 3rem;
+    text-transform: uppercase;
+    
+    
+  }
+  
+</style>
+
