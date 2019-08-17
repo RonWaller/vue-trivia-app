@@ -1,5 +1,8 @@
 <template>
   <v-container pa-0>
+    <v-layout justify-center mt-5>
+      <h2>Build Your Own Triva Game</h2>
+    </v-layout>
     <v-layout pa-5 id='selection' row fill-height justify-center>
         <v-flex id='selectBox' md-4 px-2>
           <v-select
@@ -76,13 +79,13 @@ export default {
       } 
     },
   runAxios: function() {
-      console.log('Go button was clicked');
+      // console.log('Go button was clicked');
       const payload = {
         amount: this.questionsSelected,
         category: this.categorySelected,
         difficulty: this.difficultySelected
       }
-      console.log(payload);
+      // console.log(payload);
       const setValues = {
       showSelection: false,
       showQuiz: true

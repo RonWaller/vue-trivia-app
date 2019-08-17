@@ -35,17 +35,17 @@ export default new Vuex.Store({
       { category: 'Video Games', value: '15' }
     ],
     difficulty: ['easy', 'medium', 'difficult'],
-    quizData: []
+    quizData: [],
+    responseCode: -1
   },
   mutations: {
     SET_QUIZ_DATA: (state, questions) => (state.quizData = questions),
+    SET_RESCODE: (state, code) => (state.responseCode = code),
     SET_COMPONENTS: (state, values) => {
       state = Object.assign(state, values);
     }
   },
   actions: {
-    // https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple
-
     async getQuiz({ commit }, payload) {
       const baseurl = 'https://opentdb.com/api.php?';
       const amount = payload.amount;
@@ -53,11 +53,17 @@ export default new Vuex.Store({
       const difficulty = payload.difficulty;
       const url = `${baseurl}amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple`;
       const response = await axios.get(url);
-      console.log(response.data.results);
-      commit('SET_QUIZ_DATA', response.data.results);
+      if (response.data.response_code === 0) {
+        commit('SET_QUIZ_DATA', response.data.results);
+        console.log(response.data.results);
+      } else {
+        commit('SET_RESCODE', response.data.response_code);
+        console.log(response.data.response_code);
+      }
+
+      console.log(response.data);
     },
     showComponents({ commit }, payload) {
-      console.log(payload);
       commit('SET_COMPONENTS', payload);
     }
   },
